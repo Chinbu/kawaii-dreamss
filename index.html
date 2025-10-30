@@ -13,10 +13,19 @@
     <!-- Ad SDK -->
     <script src='//libtl.com/sdk.js' data-zone='9943631' data-sdk='show_9943631'></script>
     <style>
-        /* All your CSS styles here (same as previous code) */
-        * { box-sizing: border-box; }
-        body { margin: 0; padding: 0; background-color: #f9fafb; overflow-x: hidden; }
+        /* Prevent layout shifts */
+        * {
+            box-sizing: border-box;
+        }
         
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #f9fafb;
+            overflow-x: hidden;
+        }
+        
+        /* Custom styles for animations and aesthetics */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .fade-in { animation: fadeIn 0.5s ease-out forwards; }
@@ -56,7 +65,9 @@
             cursor: pointer; 
             transition: background-color 0.3s; 
         }
-        .slider-dot.active { background-color: white; }
+        .slider-dot.active { 
+            background-color: white; 
+        }
         
         /* Kawaii header styles */
         .kawaii-header {
@@ -100,7 +111,9 @@
             box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5);
             border-color: #ffafbd;
         }
-        .floating-element { animation: float 3s ease-in-out infinite; }
+        .floating-element {
+            animation: float 3s ease-in-out infinite;
+        }
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-10px); }
@@ -120,8 +133,14 @@
             backdrop-filter: blur(10px);
             z-index: 2;
         }
-        .wallpaper-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
-        .theme-badge { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; }
+        .wallpaper-badge {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+        .theme-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
         
         /* Expiry timer */
         .expiry-timer {
@@ -148,34 +167,82 @@
             display: inline-block;
             margin-right: 8px;
         }
+        
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
         
-        .footer-compact { margin-top: 1rem !important; }
-        .section-spacing { margin-bottom: 1.5rem !important; }
+        /* Footer spacing reduced */
+        .footer-compact {
+            margin-top: 1rem !important;
+        }
+        
+        /* NEW: Proper spacing between sections */
+        .section-spacing {
+            margin-bottom: 1.5rem !important;
+        }
         
         @media (min-width: 768px) {
-            .section-spacing { margin-bottom: 2rem !important; }
+            .section-spacing {
+                margin-bottom: 2rem !important;
+            }
         }
         
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
-            .kawaii-title { font-size: 2rem; }
-            .kawaii-subtitle { font-size: 1rem; }
-            .kawaii-search { padding: 12px 16px 12px 48px; }
-            #content-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .kawaii-title {
+                font-size: 2rem;
+            }
+            .kawaii-subtitle {
+                font-size: 1rem;
+            }
+            .kawaii-search {
+                padding: 12px 16px 12px 48px;
+            }
+            #content-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
         }
         
-        .slider-large { height: 280px !important; }
-        @media (min-width: 768px) { .slider-large { height: 400px !important; } }
-        @media (min-width: 1024px) { .slider-large { height: 450px !important; } }
+        /* Larger slider height */
+        .slider-large {
+            height: 280px !important;
+        }
+        
+        @media (min-width: 768px) {
+            .slider-large {
+                height: 400px !important;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .slider-large {
+                height: 450px !important;
+            }
+        }
 
         /* Button states */
-        .btn-unlocked { background: linear-gradient(to right, #4ade80, #16a34a) !important; }
-        .btn-locked { background: linear-gradient(to right, #ff6b6b, #c53b3b) !important; }
-        .btn-progress { background: linear-gradient(to right, #f59e0b, #d97706) !important; }
-        .countdown-timer { background: linear-gradient(to right, #8b5cf6, #7c3aed) !important; }
+        .btn-unlocked {
+            background: linear-gradient(to right, #4ade80, #16a34a) !important;
+        }
+        .btn-locked {
+            background: linear-gradient(to right, #ff6b6b, #c53b3b) !important;
+        }
+        .btn-progress {
+            background: linear-gradient(to right, #f59e0b, #d97706) !important;
+        }
+
+        /* Countdown timer */
+        .countdown-timer {
+            background: linear-gradient(to right, #8b5cf6, #7c3aed) !important;
+        }
+
+        /* Ad overlay */
+        .ad-overlay {
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+        }
     </style>
 </head>
 <body class="bg-gray-50 font-sans">
@@ -239,27 +306,20 @@
         </div>
     </footer>
 
-    <!-- Ad Modal -->
-    <div id="ad-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
-        <div class="bg-white p-6 rounded-2xl max-w-md w-full mx-4 text-center">
-            <h3 class="text-2xl font-bold mb-4">Watch Ad to Unlock</h3>
-            <div class="bg-gray-100 p-8 rounded-lg mb-4">
-                <i class="fas fa-ad text-4xl text-blue-500 mb-3"></i>
-                <p class="text-lg">Advertisement will play here</p>
-                <div class="mt-4 text-sm text-gray-600">
-                    <p>Ad simulation for Telegram Mini App</p>
-                    <p id="ad-content-type" class="font-semibold mt-2"></p>
-                    <p id="ad-progress" class="text-sm mt-2"></p>
+    <!-- Ad Overlay (No popup, direct ad display) -->
+    <div id="ad-overlay" class="fixed inset-0 bg-black bg-opacity-90 hidden items-center justify-center z-50">
+        <div class="text-center text-white max-w-md mx-4">
+            <div class="ad-overlay p-8 rounded-2xl mb-6">
+                <i class="fas fa-ad text-6xl text-yellow-400 mb-4"></i>
+                <h3 class="text-3xl font-bold mb-4">Advertisement</h3>
+                <p class="text-lg mb-2">Please watch the ad to continue</p>
+                <p class="text-sm opacity-80">Ad will complete automatically</p>
+                <div class="mt-6">
+                    <div class="circular-loader mx-auto"></div>
+                    <p class="text-sm mt-2">Loading ad...</p>
                 </div>
             </div>
-            <div class="flex gap-3">
-                <button id="cancel-ad" class="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600">
-                    Cancel
-                </button>
-                <button id="watch-ad" class="flex-1 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600">
-                    Watch Ad
-                </button>
-            </div>
+            <div id="ad-progress" class="text-yellow-400 font-semibold text-lg"></div>
         </div>
     </div>
 
@@ -329,12 +389,9 @@
             searchInput: document.getElementById('searchInput'),
             noResultsMessage: document.getElementById('no-results'),
             contentTitle: document.getElementById('content-title'),
-            adModal: document.getElementById('ad-modal'),
-            cancelAd: document.getElementById('cancel-ad'),
-            watchAd: document.getElementById('watch-ad'),
+            adOverlay: document.getElementById('ad-overlay'),
             toast: document.getElementById('toast'),
             toastMessage: document.getElementById('toast-message'),
-            adContentType: document.getElementById('ad-content-type'),
             adProgress: document.getElementById('ad-progress')
         };
 
@@ -512,36 +569,91 @@
             }, 1000);
         }
 
-        // Improved ad function
-        function showAd() {
+        // Improved ad function with better error handling
+        function showAd(contentId, requiredAds, currentAdCount) {
             return new Promise((resolve, reject) => {
-                console.log('Starting ad...');
+                console.log('Starting ad for content:', contentId);
                 
-                if (typeof show_9943631 === 'undefined') {
-                    console.log('Ad SDK not found, using simulation');
-                    setTimeout(() => {
-                        console.log('Simulated ad completed');
-                        resolve();
-                    }, 3000);
-                    return;
+                // Show ad overlay with progress
+                elements.adOverlay.classList.remove('hidden');
+                elements.adProgress.textContent = getText('ad_progress', { 
+                    current: currentAdCount + 1, 
+                    total: requiredAds 
+                });
+
+                let adCompleted = false;
+                let fallbackTimeout;
+
+                // Method 1: Try actual ad SDK first
+                if (typeof show_9943631 !== 'undefined') {
+                    console.log('Using actual ad SDK');
+                    try {
+                        // Show actual ad
+                        show_9943631();
+                        
+                        // Set timeout to resolve after ad completion (8 seconds for real ad)
+                        fallbackTimeout = setTimeout(() => {
+                            if (!adCompleted) {
+                                console.log('Ad completed via timeout');
+                                adCompleted = true;
+                                elements.adOverlay.classList.add('hidden');
+                                resolve();
+                            }
+                        }, 8000);
+                        
+                    } catch (error) {
+                        console.error('Ad SDK error:', error);
+                        // Fallback to simulated ad
+                        startSimulatedAd();
+                    }
+                } else {
+                    // Method 2: Simulated ad fallback
+                    console.log('Using simulated ad');
+                    startSimulatedAd();
                 }
-                
-                try {
-                    console.log('Calling ad SDK...');
-                    
-                    show_9943631();
-                    
-                    setTimeout(() => {
-                        console.log('Ad completed');
-                        resolve();
+
+                function startSimulatedAd() {
+                    console.log('Starting simulated ad');
+                    // Simulate ad with progress
+                    let progress = 0;
+                    const progressInterval = setInterval(() => {
+                        progress += 20;
+                        if (progress >= 100) {
+                            clearInterval(progressInterval);
+                            if (!adCompleted) {
+                                adCompleted = true;
+                                console.log('Simulated ad completed');
+                                elements.adOverlay.classList.add('hidden');
+                                resolve();
+                            }
+                        }
+                    }, 1000);
+
+                    // Fallback timeout for simulated ad (5 seconds)
+                    fallbackTimeout = setTimeout(() => {
+                        clearInterval(progressInterval);
+                        if (!adCompleted) {
+                            adCompleted = true;
+                            console.log('Simulated ad completed via timeout');
+                            elements.adOverlay.classList.add('hidden');
+                            resolve();
+                        }
                     }, 5000);
-                    
-                } catch (error) {
-                    console.error('Ad error:', error);
-                    setTimeout(() => {
-                        resolve();
-                    }, 3000);
                 }
+
+                // Handle ad completion callback (if available)
+                if (typeof window.adCompleted === 'undefined') {
+                    window.adCompleted = function() {
+                        console.log('Ad completion callback received');
+                        clearTimeout(fallbackTimeout);
+                        if (!adCompleted) {
+                            adCompleted = true;
+                            elements.adOverlay.classList.add('hidden');
+                            resolve();
+                        }
+                    };
+                }
+
             });
         }
 
@@ -553,9 +665,14 @@
             
             autoAdInterval = setInterval(() => {
                 console.log('Auto ad triggered (5 minutes)');
-                showAd().catch(error => {
-                    console.log('Auto ad failed:', error);
-                });
+                // Show auto ad without blocking UI
+                if (typeof show_9943631 !== 'undefined') {
+                    try {
+                        show_9943631();
+                    } catch (error) {
+                        console.log('Auto ad failed:', error);
+                    }
+                }
             }, CONFIG.AUTO_AD_INTERVAL);
             
             console.log('Auto ads started - will show every 5 minutes');
@@ -655,7 +772,8 @@
                             ${isWallpaper ? '📱 Wallpaper' : '🎨 Theme'}
                         </div>
                         ${expiryTimeDisplay ? `<div class="expiry-timer">${expiryTimeDisplay}</div>` : ''}
-                        <img src="${item.thumbnailUrl}" loading="lazy" alt="${item.title}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x225/cccccc/ffffff?text=Image+Not+Found';">
+                        <!-- Increased thumbnail height from h-48 to h-64 -->
+                        <img src="${item.thumbnailUrl}" loading="lazy" alt="${item.title}" class="w-full h-64 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x256/cccccc/ffffff?text=Image+Not+Found';">
                         <div class="p-4">
                             <h3 class="text-lg font-bold text-gray-900 truncate" title="${item.title}">${item.title}</h3>
                             <p class="text-gray-600 text-sm mt-1 h-10 overflow-hidden">${item.description}</p>
@@ -675,7 +793,7 @@
             });
         }
 
-        function handleContentClick(contentId, contentType, downloadUrl, requiredAds) {
+        async function handleContentClick(contentId, contentType, downloadUrl, requiredAds) {
             const isWallpaper = contentType === 'wallpaper';
             const adCount = currentState.userProgress[contentId] || 0;
             const isExpired = hasDownloadExpired(contentId);
@@ -693,20 +811,29 @@
                 const remainingTime = getRemainingCountdownTime(contentId);
                 showToast('countdown_wait', { time: remainingTime });
             } else {
-                currentState.currentAdContent = { 
-                    id: contentId,
-                    type: contentType,
-                    downloadUrl: downloadUrl,
-                    requiredAds: requiredAds,
-                    currentAdCount: adCount
-                };
-                
-                elements.adContentType.textContent = `Unlock ${isWallpaper ? 'Wallpaper' : 'Theme'}`;
-                elements.adProgress.textContent = getText('ad_progress', { 
-                    current: adCount + 1, 
-                    total: requiredAds 
-                });
-                elements.adModal.classList.remove('hidden');
+                // DIRECT AD SHOW - NO POPUP
+                try {
+                    await showAd(contentId, requiredAds, adCount);
+                    
+                    // Update ad count after successful ad
+                    const newAdCount = (currentState.userProgress[contentId] || 0) + 1;
+                    currentState.userProgress[contentId] = newAdCount;
+                    localStorage.setItem('userProgress', JSON.stringify(currentState.userProgress));
+                    
+                    if (newAdCount >= requiredAds) {
+                        setDownloadExpiry(contentId);
+                        showToast('toast_unlocked');
+                    } else {
+                        showToast('toast_progress', { adCount: newAdCount, requiredCount: requiredAds });
+                    }
+                    
+                    // Start countdown
+                    startCountdown(contentId);
+                    
+                } catch (error) {
+                    console.error('Ad error:', error);
+                    showToast('toast_ad_error');
+                }
             }
         }
 
@@ -738,51 +865,6 @@
             renderContent();
             
             elements.searchInput.addEventListener('input', handleSearch);
-            
-            elements.cancelAd.addEventListener('click', () => {
-                elements.adModal.classList.add('hidden');
-                currentState.currentAdContent = null;
-                elements.watchAd.disabled = false;
-                elements.watchAd.textContent = 'Watch Ad';
-            });
-            
-            elements.watchAd.addEventListener('click', async () => {
-                if (!currentState.currentAdContent) return;
-                
-                const content = currentState.currentAdContent;
-                const contentId = content.id;
-                
-                try {
-                    elements.watchAd.disabled = true;
-                    elements.watchAd.innerHTML = '<div class="circular-loader"></div> Loading Ad...';
-                    
-                    await showAd();
-                    
-                    const newAdCount = (currentState.userProgress[contentId] || 0) + 1;
-                    currentState.userProgress[contentId] = newAdCount;
-                    localStorage.setItem('userProgress', JSON.stringify(currentState.userProgress));
-                    
-                    if (newAdCount >= content.requiredAds) {
-                        setDownloadExpiry(contentId);
-                        showToast('toast_unlocked');
-                    } else {
-                        showToast('toast_progress', { adCount: newAdCount, requiredCount: content.requiredAds });
-                    }
-                    
-                    startCountdown(contentId);
-                    
-                    elements.adModal.classList.add('hidden');
-                    currentState.currentAdContent = null;
-                    elements.watchAd.disabled = false;
-                    elements.watchAd.textContent = 'Watch Ad';
-                    
-                } catch (error) {
-                    console.error('Ad error:', error);
-                    showToast('toast_ad_error');
-                    elements.watchAd.disabled = false;
-                    elements.watchAd.textContent = 'Watch Ad';
-                }
-            });
             
             setupAutoAds();
             
