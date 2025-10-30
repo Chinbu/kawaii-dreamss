@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kawaii Dreams - Wallpapers & Themes</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Preload Ad SDK -->
+    <link rel="preload" href="//libtl.com/sdk.js" as="script">
+    <!-- Ad SDK -->
+    <script src='//libtl.com/sdk.js' data-zone='9943631' data-sdk='show_9943631'></script>
+    <style>
+        /* All your CSS styles here (same as previous code) */
+        * { box-sizing: border-box; }
+        body { margin: 0; padding: 0; background-color: #f9fafb; overflow-x: hidden; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { animation: fadeIn 0.5s ease-out forwards; }
+        .slide-up { animation: slideUp 0.4s ease-out forwards; opacity: 0; }
+        .animation-delay-200 { animation-delay: 0.2s; }
+        .animation-delay-400 { animation-delay: 0.4s; }
+        
+        .slider-container { 
+            position: relative; 
+            overflow: hidden;
+            background: #e5e7eb;
+        }
+        .slider-wrapper { 
+            display: flex; 
+            transition: transform 0.5s ease-in-out;
+            will-change: transform;
+        }
+        .slider-item { 
+            min-width: 100%; 
+            box-sizing: border-box;
+            flex-shrink: 0;
+        }
+        .slider-dots { 
+            position: absolute; 
+            bottom: 10px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            display: flex; 
+            gap: 8px; 
+            z-index: 10;
+        }
+        .slider-dot { 
+            width: 10px; 
+            height: 10px; 
+            border-radius: 50%; 
+            background-color: rgba(255, 255, 255, 0.5); 
+            cursor: pointer; 
+            transition: background-color 0.3s; 
+        }
+        .slider-dot.active { background-color: white; }
+        
+        /* Kawaii header styles */
+        .kawaii-header {
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .kawaii-header::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 60%);
+            transform: rotate(30deg);
+        }
+        .kawaii-title {
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+            font-weight: 900;
+            text-shadow: 3px 3px 0px rgba(255, 105, 180, 0.3);
+            color: #ff6b6b;
+            letter-spacing: 1px;
+        }
+        .kawaii-subtitle {
+            color: #ff8e9e;
+            text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
+            font-weight: 600;
+        }
+        .kawaii-search {
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #ffd1dc;
+            border-radius: 50px;
+            box-shadow: 0 4px 10px rgba(255, 182, 193, 0.3);
+            transition: all 0.3s ease;
+        }
+        .kawaii-search:focus {
+            outline: none;
+            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.5);
+            border-color: #ffafbd;
+        }
+        .floating-element { animation: float 3s ease-in-out infinite; }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Type badges */
+        .type-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.9);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            z-index: 2;
+        }
+        .wallpaper-badge { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .theme-badge { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; }
+        
+        /* Expiry timer */
+        .expiry-timer {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            z-index: 2;
+        }
+        
+        /* Circular Loading Spinner */
+        .circular-loader {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 3px solid #ffffff;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer-compact { margin-top: 1rem !important; }
+        .section-spacing { margin-bottom: 1.5rem !important; }
+        
+        @media (min-width: 768px) {
+            .section-spacing { margin-bottom: 2rem !important; }
+        }
+        
+        @media (max-width: 768px) {
+            .kawaii-title { font-size: 2rem; }
+            .kawaii-subtitle { font-size: 1rem; }
+            .kawaii-search { padding: 12px 16px 12px 48px; }
+            #content-grid { grid-template-columns: 1fr; gap: 1rem; }
+        }
+        
+        .slider-large { height: 280px !important; }
+        @media (min-width: 768px) { .slider-large { height: 400px !important; } }
+        @media (min-width: 1024px) { .slider-large { height: 450px !important; } }
+
+        /* Button states */
+        .btn-unlocked { background: linear-gradient(to right, #4ade80, #16a34a) !important; }
+        .btn-locked { background: linear-gradient(to right, #ff6b6b, #c53b3b) !important; }
+        .btn-progress { background: linear-gradient(to right, #f59e0b, #d97706) !important; }
+        .countdown-timer { background: linear-gradient(to right, #8b5cf6, #7c3aed) !important; }
+    </style>
+</head>
+<body class="bg-gray-50 font-sans">
+    <div id="app" class="container mx-auto p-4 max-w-7xl">
+        <!-- Header - Kawaii Design -->
+        <header class="kawaii-header p-6 md:p-8 rounded-xl shadow-lg section-spacing fade-in relative overflow-hidden">
+            <div class="absolute top-4 right-4 flex space-x-2">
+                <div class="w-4 h-4 md:w-6 md:h-6 bg-pink-300 rounded-full floating-element" style="animation-delay: 0.2s"></div>
+                <div class="w-3 h-3 md:w-4 md:h-4 bg-yellow-300 rounded-full floating-element" style="animation-delay: 0.4s"></div>
+                <div class="w-3.5 h-3.5 md:w-5 md:h-5 bg-blue-300 rounded-full floating-element" style="animation-delay: 0.6s"></div>
+            </div>
+            
+            <h1 class="kawaii-title text-3xl md:text-5xl font-extrabold text-center mb-3 md:mb-4">ᴋᴀᴡᴀɪɪ ᴅʀᴇᴀᴍs</h1>
+            <p class="kawaii-subtitle text-center text-lg md:text-xl mb-6 md:mb-8">Watch Ads, Unlock Premium Wallpapers & Themes!</p>
+            
+            <div class="max-w-2xl mx-auto relative z-10">
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <i class="fas fa-search text-pink-400"></i>
+                    </div>
+                    <input type="text" id="searchInput" placeholder="Search for wallpapers & themes..." class="kawaii-search w-full p-3 md:p-4 pl-10 md:pl-12 text-gray-800 transition-all duration-300">
+                </div>
+            </div>
+            
+            <div class="absolute bottom-0 left-0 w-full flex justify-center">
+                <div class="w-20 h-4 md:w-24 md:h-6 bg-pink-200 rounded-t-full"></div>
+            </div>
+        </header>
+        
+        <!-- Image Slider - Increased Height -->
+        <div id="slider" class="slider-container slider-large w-full rounded-xl shadow-lg section-spacing slide-up animation-delay-200">
+            <div id="slider-wrapper" class="slider-wrapper h-full"></div>
+            <div id="slider-dots" class="slider-dots"></div>
+        </div>
+        
+        <!-- Content Section -->
+        <div class="slide-up animation-delay-400 section-spacing">
+            <h2 id="content-title" class="text-2xl md:text-3xl font-bold text-gray-800 mb-4 md:mb-6 border-b-4 border-pink-400 pb-2">All Content</h2>
+            <div id="content-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                <!-- Content cards will be injected here -->
+            </div>
+            <div id="no-results" class="hidden text-center py-8 md:py-12">
+                <i class="fas fa-search text-4xl md:text-5xl text-gray-400 mb-3 md:mb-4"></i>
+                <p class="text-lg md:text-xl text-gray-600">No items found matching your search.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-gray-900 text-white py-3 px-5 rounded-lg shadow-2xl opacity-0 transform translate-y-10 transition-all duration-300 z-50 max-w-xs">
+        <p id="toast-message" class="text-sm md:text-base"></p>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-100 py-6 section-spacing footer-compact">
+        <div class="container mx-auto px-4">
+            <p class="text-center text-gray-600 text-sm md:text-base">
+                Made With 💖 By XBI | 
+                <a href="https://t.me/+je3SYj65zM84MzRl" target="_blank" class="text-blue-500 hover:text-blue-700 font-medium">Join Telegram</a>
+            </p>
+        </div>
+    </footer>
+
+    <!-- Ad Modal -->
+    <div id="ad-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+        <div class="bg-white p-6 rounded-2xl max-w-md w-full mx-4 text-center">
+            <h3 class="text-2xl font-bold mb-4">Watch Ad to Unlock</h3>
+            <div class="bg-gray-100 p-8 rounded-lg mb-4">
+                <i class="fas fa-ad text-4xl text-blue-500 mb-3"></i>
+                <p class="text-lg">Advertisement will play here</p>
+                <div class="mt-4 text-sm text-gray-600">
+                    <p>Ad simulation for Telegram Mini App</p>
+                    <p id="ad-content-type" class="font-semibold mt-2"></p>
+                    <p id="ad-progress" class="text-sm mt-2"></p>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button id="cancel-ad" class="flex-1 bg-gray-500 text-white py-3 rounded-lg hover:bg-gray-600">
+                    Cancel
+                </button>
+                <button id="watch-ad" class="flex-1 bg-green-500 text-white py-3 rounded-lg hover:bg-green-600">
+                    Watch Ad
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Configuration
+        const CONFIG = {
+            DOWNLOAD_EXPIRY_TIME: 10 * 60 * 1000,
+            AUTO_AD_INTERVAL: 5 * 60 * 1000,
+            COUNTDOWN_TIME: 20000,
+            WALLPAPERS_ADS_REQUIRED: 3,
+            THEMES_ADS_REQUIRED: 5
+        };
+
+        // Your content data
+        let contentData = {
+            wallpapers: [
+                {
+                    id: '1',
+                    title: 'Kaoruka',
+                    description: 'Beautiful Kaoruka wallpaper',
+                    thumbnailUrl: 'https://i.ibb.co/93v4Y9ZS/Neon-gradient-mobile-mockup-instagram-post-5.png',
+                    downloadUrl: 'https://www.mediafire.com/view/iprqxoxq3kqaeka/Kaoruko_Powered_by_%2540kawaii_dreams.jpg/file',
+                    requiredAds: CONFIG.WALLPAPERS_ADS_REQUIRED,
+                    type: 'wallpaper',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: '2',
+                    title: 'Alya',
+                    description: 'Beautiful Alya wallpaper',
+                    thumbnailUrl: 'https://i.ibb.co/BHxJSy0b/Neon-gradient-mobile-mockup-instagram-post-4.png',
+                    downloadUrl: 'https://www.mediafire.com/view/i5ijedgievqz4p8/Alya_Powered_by_%2540kawaii_dreams.jpg/file',
+                    requiredAds: CONFIG.WALLPAPERS_ADS_REQUIRED,
+                    type: 'wallpaper',
+                    createdAt: new Date().toISOString()
+                }
+            ],
+            themes: [
+                {
+                    id: '3',
+                    title: 'Kaoruka',
+                    description: 'Beautiful Kaoruka theme',
+                    thumbnailUrl: 'https://i.ibb.co/1tK2nSPW/IMG-20251017-232540-666.jpg',
+                    downloadUrl: 'https://t.me/addtheme/Kaaoruuko',
+                    requiredAds: CONFIG.THEMES_ADS_REQUIRED,
+                    type: 'theme',
+                    createdAt: new Date().toISOString()
+                },
+                {
+                    id: '4',
+                    title: 'Alya',
+                    description: 'Beautiful Alya theme',
+                    thumbnailUrl: 'https://i.ibb.co/p69G4qJL/IMG-20251006-230018-270.jpg',
+                    downloadUrl: 'https://t.me/addtheme/Aalyaa',
+                    requiredAds: CONFIG.THEMES_ADS_REQUIRED,
+                    type: 'theme',
+                    createdAt: new Date().toISOString()
+                }
+            ]
+        };
+
+        // DOM Elements
+        const elements = {
+            sliderWrapper: document.getElementById('slider-wrapper'),
+            sliderDotsContainer: document.getElementById('slider-dots'),
+            contentGrid: document.getElementById('content-grid'),
+            searchInput: document.getElementById('searchInput'),
+            noResultsMessage: document.getElementById('no-results'),
+            contentTitle: document.getElementById('content-title'),
+            adModal: document.getElementById('ad-modal'),
+            cancelAd: document.getElementById('cancel-ad'),
+            watchAd: document.getElementById('watch-ad'),
+            toast: document.getElementById('toast'),
+            toastMessage: document.getElementById('toast-message'),
+            adContentType: document.getElementById('ad-content-type'),
+            adProgress: document.getElementById('ad-progress')
+        };
+
+        let sliderInterval;
+        let currentSlide = 0;
+        let autoAdInterval;
+        let countdownIntervals = {};
+        let expiryIntervals = {};
+        let currentState = {
+            currentAdContent: null,
+            userProgress: JSON.parse(localStorage.getItem('userProgress')) || {},
+            expiryTimes: JSON.parse(localStorage.getItem('expiryTimes')) || {},
+            countdowns: JSON.parse(localStorage.getItem('countdowns')) || {}
+        };
+
+        const translations = {
+            en: { 
+                all_content: "All Content",
+                no_results_text: "No items found matching your search.", 
+                unlock_button: "Unlock ({adCount}/{requiredCount})", 
+                download_now_button: "Download Now", 
+                apply_now_button: "Apply Theme",
+                toast_download_starting: "Your download is starting...", 
+                toast_theme_applying: "Opening theme apply link...",
+                toast_progress: "Progress: {adCount}/{requiredCount}", 
+                toast_unlocked: "Item unlocked! You can now download/apply.", 
+                toast_ad_error: "Could not load ad. Please try again.", 
+                toast_expired: "Download expired. Watch ads again to unlock.",
+                expiry_time: "Expires in {time}",
+                ad_progress: "Ad {current} of {total}",
+                countdown_wait: "Wait {time}s"
+            }
+        };
+
+        function getText(key, params = {}) {
+            let text = translations['en'][key] || key;
+            for (const param in params) text = text.replace(`{${param}}`, params[param]);
+            return text;
+        }
+
+        function showToast(key, params = {}) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = getText(key, params);
+            toast.classList.remove('opacity-0', 'translate-y-10');
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-10');
+            }, 3000);
+        }
+
+        // Check if content is in countdown
+        function isInCountdown(contentId) {
+            const countdownEnd = currentState.countdowns[contentId];
+            if (!countdownEnd) return false;
+            return new Date().getTime() < countdownEnd;
+        }
+
+        // Get remaining countdown time
+        function getRemainingCountdownTime(contentId) {
+            const countdownEnd = currentState.countdowns[contentId];
+            if (!countdownEnd) return 0;
+            const currentTime = new Date().getTime();
+            const remainingTime = countdownEnd - currentTime;
+            return Math.max(0, Math.ceil(remainingTime / 1000));
+        }
+
+        // Start countdown for specific content
+        function startCountdown(contentId) {
+            const countdownEnd = new Date().getTime() + CONFIG.COUNTDOWN_TIME;
+            currentState.countdowns[contentId] = countdownEnd;
+            localStorage.setItem('countdowns', JSON.stringify(currentState.countdowns));
+            
+            if (countdownIntervals[contentId]) {
+                clearInterval(countdownIntervals[contentId]);
+            }
+
+            countdownIntervals[contentId] = setInterval(() => {
+                const remainingTime = getRemainingCountdownTime(contentId);
+                const button = document.querySelector(`[data-content-id="${contentId}"] button`);
+                
+                if (button) {
+                    if (remainingTime > 0) {
+                        button.className = 'w-full mt-4 py-2.5 px-4 rounded-lg text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 countdown-timer';
+                        button.innerHTML = `<i class="fas fa-clock"></i><span>${getText('countdown_wait', { time: remainingTime })}</span>`;
+                    } else {
+                        clearInterval(countdownIntervals[contentId]);
+                        delete countdownIntervals[contentId];
+                        delete currentState.countdowns[contentId];
+                        localStorage.setItem('countdowns', JSON.stringify(currentState.countdowns));
+                        updateContentButton(contentId);
+                    }
+                } else {
+                    clearInterval(countdownIntervals[contentId]);
+                    delete countdownIntervals[contentId];
+                }
+            }, 1000);
+        }
+
+        // Update button for specific content
+        function updateContentButton(contentId) {
+            const item = [...contentData.wallpapers, ...contentData.themes].find(item => item.id === contentId);
+            if (!item) return;
+
+            const adCount = currentState.userProgress[item.id] || 0;
+            const isExpired = hasDownloadExpired(item.id);
+            const isWallpaper = item.type === 'wallpaper';
+            const isUnlocked = adCount >= item.requiredAds && !isExpired;
+            const inCountdown = isInCountdown(contentId);
+
+            const button = document.querySelector(`[data-content-id="${contentId}"] button`);
+            if (!button) return;
+
+            if (isUnlocked) {
+                button.className = 'w-full mt-4 py-2.5 px-4 rounded-lg text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 btn-unlocked';
+                button.innerHTML = `<i class="fas ${isWallpaper ? 'fa-download' : 'fa-paint-brush'}"></i><span>${isWallpaper ? 'Download Now' : 'Apply Theme'}</span>`;
+            } else if (inCountdown) {
+                const remainingTime = getRemainingCountdownTime(contentId);
+                button.className = 'w-full mt-4 py-2.5 px-4 rounded-lg text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 countdown-timer';
+                button.innerHTML = `<i class="fas fa-clock"></i><span>${getText('countdown_wait', { time: remainingTime })}</span>`;
+            } else {
+                button.className = 'w-full mt-4 py-2.5 px-4 rounded-lg text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 btn-locked';
+                button.innerHTML = `<i class="fas fa-lock"></i><span>${getText('unlock_button', { adCount: adCount, requiredCount: item.requiredAds })}</span>`;
+            }
+        }
+
+        // Check if download has expired
+        function hasDownloadExpired(contentId) {
+            const expiryTime = currentState.expiryTimes[contentId];
+            if (!expiryTime) return false;
+            return new Date().getTime() > parseInt(expiryTime);
+        }
+
+        // Set download expiry
+        function setDownloadExpiry(contentId) {
+            const expiryTime = new Date().getTime() + CONFIG.DOWNLOAD_EXPIRY_TIME;
+            currentState.expiryTimes[contentId] = expiryTime;
+            localStorage.setItem('expiryTimes', JSON.stringify(currentState.expiryTimes));
+            startExpiryTimer(contentId, expiryTime);
+        }
+
+        // Start expiry timer
+        function startExpiryTimer(contentId, expiryTime) {
+            if (expiryIntervals[contentId]) {
+                clearInterval(expiryIntervals[contentId]);
+            }
+
+            expiryIntervals[contentId] = setInterval(() => {
+                const currentTime = new Date().getTime();
+                const remainingTime = expiryTime - currentTime;
+                
+                if (remainingTime <= 0) {
+                    delete currentState.userProgress[contentId];
+                    delete currentState.expiryTimes[contentId];
+                    localStorage.setItem('userProgress', JSON.stringify(currentState.userProgress));
+                    localStorage.setItem('expiryTimes', JSON.stringify(currentState.expiryTimes));
+                    
+                    const expiryElement = document.querySelector(`[data-content-id="${contentId}"] .expiry-timer`);
+                    if (expiryElement) {
+                        expiryElement.remove();
+                    }
+                    
+                    updateContentButton(contentId);
+                    
+                    clearInterval(expiryIntervals[contentId]);
+                    delete expiryIntervals[contentId];
+                    return;
+                }
+                
+                const expiryElement = document.querySelector(`[data-content-id="${contentId}"] .expiry-timer`);
+                if (expiryElement) {
+                    const minutes = Math.floor(remainingTime / 60000);
+                    const seconds = Math.floor((remainingTime % 60000) / 1000);
+                    expiryElement.textContent = getText('expiry_time', { time: `${minutes}:${seconds.toString().padStart(2, '0')}` });
+                }
+            }, 1000);
+        }
+
+        // Improved ad function
+        function showAd() {
+            return new Promise((resolve, reject) => {
+                console.log('Starting ad...');
+                
+                if (typeof show_9943631 === 'undefined') {
+                    console.log('Ad SDK not found, using simulation');
+                    setTimeout(() => {
+                        console.log('Simulated ad completed');
+                        resolve();
+                    }, 3000);
+                    return;
+                }
+                
+                try {
+                    console.log('Calling ad SDK...');
+                    
+                    show_9943631();
+                    
+                    setTimeout(() => {
+                        console.log('Ad completed');
+                        resolve();
+                    }, 5000);
+                    
+                } catch (error) {
+                    console.error('Ad error:', error);
+                    setTimeout(() => {
+                        resolve();
+                    }, 3000);
+                }
+            });
+        }
+
+        // Setup automatic ads for Telegram Mini App (every 5 minutes)
+        function setupAutoAds() {
+            if (autoAdInterval) {
+                clearInterval(autoAdInterval);
+            }
+            
+            autoAdInterval = setInterval(() => {
+                console.log('Auto ad triggered (5 minutes)');
+                showAd().catch(error => {
+                    console.log('Auto ad failed:', error);
+                });
+            }, CONFIG.AUTO_AD_INTERVAL);
+            
+            console.log('Auto ads started - will show every 5 minutes');
+        }
+
+        function loadSliders() {
+            const slides = [
+                {
+                    imageUrl: 'https://i.ibb.co/h1RfFFFM/IMG-20251030-113334-573.jpg',
+                    linkUrl: ''
+                },
+                {
+                    imageUrl: 'https://i.ibb.co/jv2GCNrT/IMG-20251030-113330-563.jpg',
+                    linkUrl: ''
+                }
+            ];
+            
+            elements.sliderWrapper.innerHTML = '';
+            elements.sliderDotsContainer.innerHTML = '';
+            
+            slides.forEach((slide, index) => {
+                const slideEl = document.createElement('div');
+                slideEl.className = 'slider-item';
+                const imageHTML = `<img src="${slide.imageUrl}" loading="lazy" class="w-full h-full object-cover" onerror="this.onerror=null;this.src='https://placehold.co/1280x400/cccccc/ffffff?text=Promotional+Slide';">`;
+                slideEl.innerHTML = slide.linkUrl ? `<a href="${slide.linkUrl}" target="_blank" rel="noopener noreferrer">${imageHTML}</a>` : imageHTML;
+                elements.sliderWrapper.appendChild(slideEl);
+                
+                const dotEl = document.createElement('div');
+                dotEl.className = 'slider-dot';
+                dotEl.dataset.index = index;
+                elements.sliderDotsContainer.appendChild(dotEl);
+            });
+            
+            setupSlider(slides.length);
+        }
+
+        function setupSlider(slideCount) {
+            if (slideCount <= 1) return;
+            const dots = document.querySelectorAll('.slider-dot');
+            function goToSlide(slideIndex) {
+                currentSlide = (slideIndex + slideCount) % slideCount;
+                elements.sliderWrapper.style.transform = `translateX(-${currentSlide * 100}%)`;
+                dots.forEach(dot => dot.classList.remove('active'));
+                if(dots[currentSlide]) dots[currentSlide].classList.add('active');
+            }
+            if (sliderInterval) clearInterval(sliderInterval);
+            sliderInterval = setInterval(() => goToSlide(currentSlide + 1), 3000);
+            dots.forEach(dot => dot.addEventListener('click', (e) => goToSlide(parseInt(e.target.dataset.index))));
+            goToSlide(0);
+        }
+
+        function renderContent(filteredContent = null) {
+            const allContent = [...contentData.wallpapers, ...contentData.themes];
+            const contentToRender = filteredContent || allContent;
+            
+            if (contentToRender.length === 0) {
+                elements.contentGrid.innerHTML = '';
+                elements.noResultsMessage.classList.remove('hidden');
+                return;
+            }
+            
+            elements.noResultsMessage.classList.add('hidden');
+            
+            elements.contentGrid.innerHTML = contentToRender.map(item => {
+                const adCount = currentState.userProgress[item.id] || 0;
+                const isExpired = hasDownloadExpired(item.id);
+                const isWallpaper = item.type === 'wallpaper';
+                const isUnlocked = adCount >= item.requiredAds && !isExpired;
+                const inCountdown = isInCountdown(item.id);
+                
+                let expiryTimeDisplay = '';
+                if (isUnlocked && !isExpired && currentState.expiryTimes[item.id]) {
+                    const remainingTime = currentState.expiryTimes[item.id] - new Date().getTime();
+                    const minutes = Math.floor(remainingTime / 60000);
+                    const seconds = Math.floor((remainingTime % 60000) / 1000);
+                    expiryTimeDisplay = getText('expiry_time', { time: `${minutes}:${seconds.toString().padStart(2, '0')}` });
+                }
+                
+                let buttonClass = 'w-full mt-4 py-2.5 px-4 rounded-lg text-white font-semibold transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 ';
+                let buttonContent = '';
+                
+                if (isUnlocked) {
+                    buttonClass += 'btn-unlocked';
+                    buttonContent = `<i class="fas ${isWallpaper ? 'fa-download' : 'fa-paint-brush'}"></i><span>${isWallpaper ? 'Download Now' : 'Apply Theme'}</span>`;
+                } else if (inCountdown) {
+                    const remainingTime = getRemainingCountdownTime(item.id);
+                    buttonClass += 'countdown-timer';
+                    buttonContent = `<i class="fas fa-clock"></i><span>${getText('countdown_wait', { time: remainingTime })}</span>`;
+                } else {
+                    buttonClass += 'btn-locked';
+                    buttonContent = `<i class="fas fa-lock"></i><span>${getText('unlock_button', { adCount: adCount, requiredCount: item.requiredAds })}</span>`;
+                }
+                
+                return `
+                    <div class="bg-white rounded-xl shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300 hover:shadow-xl relative" data-content-id="${item.id}">
+                        <div class="type-badge ${isWallpaper ? 'wallpaper-badge' : 'theme-badge'}">
+                            ${isWallpaper ? '📱 Wallpaper' : '🎨 Theme'}
+                        </div>
+                        ${expiryTimeDisplay ? `<div class="expiry-timer">${expiryTimeDisplay}</div>` : ''}
+                        <img src="${item.thumbnailUrl}" loading="lazy" alt="${item.title}" class="w-full h-48 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/400x225/cccccc/ffffff?text=Image+Not+Found';">
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 truncate" title="${item.title}">${item.title}</h3>
+                            <p class="text-gray-600 text-sm mt-1 h-10 overflow-hidden">${item.description}</p>
+                            <button onclick="handleContentClick('${item.id}', '${item.type}', '${item.downloadUrl}', ${item.requiredAds})" 
+                                    class="${buttonClass}">
+                                ${buttonContent}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            contentToRender.forEach(item => {
+                if (isInCountdown(item.id)) {
+                    startCountdown(item.id);
+                }
+            });
+        }
+
+        function handleContentClick(contentId, contentType, downloadUrl, requiredAds) {
+            const isWallpaper = contentType === 'wallpaper';
+            const adCount = currentState.userProgress[contentId] || 0;
+            const isExpired = hasDownloadExpired(contentId);
+            const inCountdown = isInCountdown(contentId);
+            
+            if (adCount >= requiredAds && !isExpired) {
+                if (isWallpaper) {
+                    window.open(downloadUrl, '_blank');
+                    showToast('toast_download_starting');
+                } else {
+                    window.open(downloadUrl, '_blank');
+                    showToast('toast_theme_applying');
+                }
+            } else if (inCountdown) {
+                const remainingTime = getRemainingCountdownTime(contentId);
+                showToast('countdown_wait', { time: remainingTime });
+            } else {
+                currentState.currentAdContent = { 
+                    id: contentId,
+                    type: contentType,
+                    downloadUrl: downloadUrl,
+                    requiredAds: requiredAds,
+                    currentAdCount: adCount
+                };
+                
+                elements.adContentType.textContent = `Unlock ${isWallpaper ? 'Wallpaper' : 'Theme'}`;
+                elements.adProgress.textContent = getText('ad_progress', { 
+                    current: adCount + 1, 
+                    total: requiredAds 
+                });
+                elements.adModal.classList.remove('hidden');
+            }
+        }
+
+        // Search functionality
+        function handleSearch() {
+            const searchTerm = elements.searchInput.value.toLowerCase().trim();
+            
+            if (!searchTerm) {
+                renderContent();
+                elements.contentTitle.textContent = getText('all_content');
+                return;
+            }
+            
+            const allContent = [...contentData.wallpapers, ...contentData.themes];
+            const filteredContent = allContent.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) || 
+                item.description.toLowerCase().includes(searchTerm)
+            );
+            
+            renderContent(filteredContent);
+            elements.contentTitle.textContent = `Search Results for "${searchTerm}"`;
+        }
+
+        // Initialize the app
+        function initApp() {
+            console.log('Initializing Kawaii Dreams App...');
+            
+            loadSliders();
+            renderContent();
+            
+            elements.searchInput.addEventListener('input', handleSearch);
+            
+            elements.cancelAd.addEventListener('click', () => {
+                elements.adModal.classList.add('hidden');
+                currentState.currentAdContent = null;
+                elements.watchAd.disabled = false;
+                elements.watchAd.textContent = 'Watch Ad';
+            });
+            
+            elements.watchAd.addEventListener('click', async () => {
+                if (!currentState.currentAdContent) return;
+                
+                const content = currentState.currentAdContent;
+                const contentId = content.id;
+                
+                try {
+                    elements.watchAd.disabled = true;
+                    elements.watchAd.innerHTML = '<div class="circular-loader"></div> Loading Ad...';
+                    
+                    await showAd();
+                    
+                    const newAdCount = (currentState.userProgress[contentId] || 0) + 1;
+                    currentState.userProgress[contentId] = newAdCount;
+                    localStorage.setItem('userProgress', JSON.stringify(currentState.userProgress));
+                    
+                    if (newAdCount >= content.requiredAds) {
+                        setDownloadExpiry(contentId);
+                        showToast('toast_unlocked');
+                    } else {
+                        showToast('toast_progress', { adCount: newAdCount, requiredCount: content.requiredAds });
+                    }
+                    
+                    startCountdown(contentId);
+                    
+                    elements.adModal.classList.add('hidden');
+                    currentState.currentAdContent = null;
+                    elements.watchAd.disabled = false;
+                    elements.watchAd.textContent = 'Watch Ad';
+                    
+                } catch (error) {
+                    console.error('Ad error:', error);
+                    showToast('toast_ad_error');
+                    elements.watchAd.disabled = false;
+                    elements.watchAd.textContent = 'Watch Ad';
+                }
+            });
+            
+            setupAutoAds();
+            
+            Object.keys(currentState.expiryTimes).forEach(contentId => {
+                const expiryTime = currentState.expiryTimes[contentId];
+                if (new Date().getTime() > parseInt(expiryTime)) {
+                    delete currentState.expiryTimes[contentId];
+                    delete currentState.userProgress[contentId];
+                } else {
+                    startExpiryTimer(contentId, parseInt(expiryTime));
+                }
+            });
+            
+            Object.keys(currentState.countdowns).forEach(contentId => {
+                if (!isInCountdown(contentId)) {
+                    delete currentState.countdowns[contentId];
+                }
+            });
+            localStorage.setItem('countdowns', JSON.stringify(currentState.countdowns));
+            
+            localStorage.setItem('expiryTimes', JSON.stringify(currentState.expiryTimes));
+            localStorage.setItem('userProgress', JSON.stringify(currentState.userProgress));
+            
+            console.log('App initialized successfully!');
+        }
+
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        window.handleContentClick = handleContentClick;
+    </script>
+</body>
+</html>
